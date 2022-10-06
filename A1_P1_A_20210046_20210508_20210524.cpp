@@ -1,5 +1,10 @@
 #include "A1_P1_A_20210046_20210508_20210524.h"
 
+BigDecimalInt ::BigDecimalInt()
+{
+}
+//--------------------------------------------------------------------------------------------------------------------------------
+
 BigDecimalInt ::BigDecimalInt(string value_of_number) // setting the number and its size
 {
     try
@@ -7,8 +12,8 @@ BigDecimalInt ::BigDecimalInt(string value_of_number) // setting the number and 
         if (validate_number(value_of_number))
         {
 
-            extract_num_and_sign(value_of_number);
-            size_of_number = value_of_number.size();
+            extract_num_sign_size(value_of_number);
+            // size_of_number = value_of_number.size();
         }
         else
         {
@@ -25,7 +30,7 @@ BigDecimalInt ::BigDecimalInt(string value_of_number) // setting the number and 
 
 bool BigDecimalInt ::validate_number(string value_of_number)
 {
-    regex match("(+-)?[0-9]+");
+    regex match("[+-]?[0-9]+");
     if (regex_match(value_of_number, match))
     {
         return 1;
@@ -36,15 +41,31 @@ bool BigDecimalInt ::validate_number(string value_of_number)
     }
 }
 //--------------------------------------------------------------------------------------------------------------------------------
-BigDecimalInt BigDecimalInt ::operator+(BigDecimalInt *second_number)
+void BigDecimalInt ::extract_num_sign_size(string value_of_number)
+{
+    int start = 0;
+    if (value_of_number[0] == '+' || value_of_number[0] == '-')
+    {
+        sign_value = value_of_number[0];
+        start = 1;
+    }
+    else
+    {
+        sign_value = '+';
+    }
+    size_of_number = value_of_number.size() - start;
+    number = value_of_number.substr(start, size_of_number - start);
+}
+//--------------------------------------------------------------------------------------------------------------------------------
+BigDecimalInt BigDecimalInt ::operator+(BigDecimalInt second_number)
 {
     BigDecimalInt result;
     int carry = 0;
-    if (this->size_of_number < second_number->size_of_number) // the second number is bigger
+    if (this->size_of_number < second_number.size_of_number) // the second number is bigger
     {
         for (int i = this->size_of_number - 1; i >= 0; i--)
         {
-            int temp = (second_number->number[i] - '0') + (this->number[i] - '0') + carry;
+            int temp = (second_number.number[i] - '0') + (this->number[i] - '0') + carry;
             if (temp > 9)
             {
                 temp -= 10;
@@ -57,9 +78,9 @@ BigDecimalInt BigDecimalInt ::operator+(BigDecimalInt *second_number)
                 result.number[i] = (char)(temp + '0');
             }
         }
-        for (int i = second_number->size_of_number - 1; i >= this->size_of_number; i--)
+        for (int i = second_number.size_of_number - 1; i >= this->size_of_number; i--)
         {
-            int temp = (second_number->number[i] - '0') + carry;
+            int temp = (second_number.number[i] - '0') + carry;
             if (temp > 9)
             {
                 temp -= 10;
@@ -75,9 +96,9 @@ BigDecimalInt BigDecimalInt ::operator+(BigDecimalInt *second_number)
     }
     else
     {
-        for (int i = second_number->size_of_number - 1; i >= 0; i--)
+        for (int i = second_number.size_of_number - 1; i >= 0; i--)
         {
-            int temp = (second_number->number[i] - '0') + (this->number[i] - '0') + carry;
+            int temp = (second_number.number[i] - '0') + (this->number[i] - '0') + carry;
             if (temp > 9)
             {
                 temp -= 10;
@@ -90,7 +111,7 @@ BigDecimalInt BigDecimalInt ::operator+(BigDecimalInt *second_number)
                 result.number[i] = (char)(temp + '0');
             }
         }
-        for (int i = this->size_of_number - 1; i >= second_number->size_of_number; i--)
+        for (int i = this->size_of_number - 1; i >= second_number.size_of_number; i--)
         {
             int temp = (this->number[i] - '0') + carry;
             if (temp > 9)
@@ -108,8 +129,6 @@ BigDecimalInt BigDecimalInt ::operator+(BigDecimalInt *second_number)
     }
     return result;
 }
-//--------------------------------------------------------------------------------------------------------------------------------
-
 //--------------------------------------------------------------------------------------------------------------------------------
 
 int BigDecimalInt ::size()

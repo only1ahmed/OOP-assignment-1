@@ -16,17 +16,17 @@ private:
 public:
     BigDecimalInt();       // empty constructor
     BigDecimalInt(string); // reciving a number
-    BigDecimalInt(int);
+                           //    BigDecimalInt(int);
     bool validate_number(string);
-    void extract_num_and_sign(string);
-    BigDecimalInt operator+(BigDecimalInt *);
-    BigDecimalInt operator-(BigDecimalInt);
-    bool operator<(BigDecimalInt);
-    bool operator>(BigDecimalInt);
-    bool operator==(BigDecimalInt);
-    BigDecimalInt operator=(BigDecimalInt);
+    void extract_num_sign_size(string);
+    BigDecimalInt operator+(BigDecimalInt);
+    // BigDecimalInt operator-(BigDecimalInt);
+    // bool operator<(BigDecimalInt);
+    // bool operator>(BigDecimalInt);
+    // bool operator==(BigDecimalInt);
+    // BigDecimalInt operator=(BigDecimalInt);
     int size();
     char sign();
-    friend ostream &operator<<(ostream &, BigDecimalInt);
+    // friend ostream &operator<<(ostream &, BigDecimalInt);
 };
 #endif
