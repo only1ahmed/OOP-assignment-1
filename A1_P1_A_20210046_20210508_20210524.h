@@ -21,6 +21,9 @@ public:
     bool validate_number(string);
     void extract_num_sign_size(string);
     BigDecimalInt operator+(BigDecimalInt);
+    BigDecimalInt pos_pos(BigDecimalInt);
+    BigDecimalInt pos_neg(BigDecimalInt);
+    BigDecimalInt neg_neg(BigDecimalInt);
     // BigDecimalInt operator-(BigDecimalInt);
     // bool operator<(BigDecimalInt);
     // bool operator>(BigDecimalInt);

@@ -59,6 +59,45 @@ void BigDecimalInt ::extract_num_sign_size(string value_of_number)
 //--------------------------------------------------------------------------------------------------------------------------------
 BigDecimalInt BigDecimalInt ::operator+(BigDecimalInt second_number)
 {
+    if (this->sign_value == '+' && second_number.sign_value == '+')
+    {
+        return pos_pos(second_number);
+    }
+    else if (this->sign_value == '-' && second_number.sign_value == '+')
+    {
+    }
+    else if (this->sign_value == '+' && second_number.sign_value == '-')
+    {
+    }
+    else
+    {
+    }
+}
+
+//--------------------------------------------------------------------------------------------------------------------------------
+void BigDecimalInt ::set_size(int sz)
+{
+    for (int i = 0; i < sz; i++)
+    {
+        number.push_back('0');
+    }
+}
+//--------------------------------------------------------------------------------------------------------------------------------
+
+int BigDecimalInt ::size()
+{
+    return size_of_number;
+}
+
+//--------------------------------------------------------------------------------------------------------------------------------
+
+char BigDecimalInt ::sign()
+{
+    return sign_value;
+}
+//--------------------------------------------------------------------------------------------------------------------------------
+BigDecimalInt BigDecimalInt::pos_pos(BigDecimalInt second_number)
+{
     BigDecimalInt result;
     result.set_size((max(this->size_of_number, second_number.size_of_number) + 1));
     int carry = 0;
@@ -132,28 +171,6 @@ BigDecimalInt BigDecimalInt ::operator+(BigDecimalInt second_number)
     {
         result.number[0] = 1;
     }
+    result.sign_value = '+';
     return result;
 }
-
-//--------------------------------------------------------------------------------------------------------------------------------
-void BigDecimalInt ::set_size(int sz)
-{
-    for (int i = 0; i < sz; i++)
-    {
-        number.push_back('0');
-    }
-}
-//--------------------------------------------------------------------------------------------------------------------------------
-
-int BigDecimalInt ::size()
-{
-    return size_of_number;
-}
-
-//--------------------------------------------------------------------------------------------------------------------------------
-
-char BigDecimalInt ::sign()
-{
-    return sign_value;
-}
-//--------------------------------------------------------------------------------------------------------------------------------
