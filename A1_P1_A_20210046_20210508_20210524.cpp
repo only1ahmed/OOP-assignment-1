@@ -63,9 +63,13 @@ BigDecimalInt BigDecimalInt ::operator+(BigDecimalInt &second_number)
     {
         return pos_pos(second_number);
     }
-    else if ((this->sign_value == '-' && second_number.sign_value == '+') || (this->sign_value == '+' && second_number.sign_value == '-'))
+    else if ((this->sign_value == '+' && second_number.sign_value == '-'))
     {
         return pos_neg(second_number);
+    }
+    else if (this->sign_value == '-' && second_number.sign_value == '+')
+    {
+        return rev_pos_neg(second_number, *(this));
     }
     else
     {
@@ -188,25 +192,31 @@ BigDecimalInt BigDecimalInt ::neg_neg(BigDecimalInt &second_number)
     return result;
 }
 
-bool BigDecimalInt:: operator== (BigDecimalInt anotherDec){
-    if ((*this).number.size() != anotherDec.number.size() || (*this).sign() != anotherDec.sign()){
+bool BigDecimalInt::operator==(BigDecimalInt anotherDec)
+{
+    if ((*this).number.size() != anotherDec.number.size() || (*this).sign() != anotherDec.sign())
+    {
         return false;
     }
-    for (auto i = 0;i < number.size();i++){
-        if ((*this).number[i] != anotherDec.number[i]){
+    for (auto i = 0; i < number.size(); i++)
+    {
+        if ((*this).number[i] != anotherDec.number[i])
+        {
             return false;
         }
     }
     return true;
 }
 
-BigDecimalInt BigDecimalInt:: operator=(BigDecimalInt anotherDec){
+BigDecimalInt BigDecimalInt::operator=(BigDecimalInt anotherDec)
+{
     number = anotherDec.number;
     sign_value = anotherDec.sign();
     return (*this);
 }
 
-ostream& operator<<(ostream & out ,BigDecimalInt DecInt){
+ostream &operator<<(ostream &out, BigDecimalInt DecInt)
+{
     if (DecInt.sign() == '-')
         out << DecInt.sign();
 
@@ -214,35 +224,51 @@ ostream& operator<<(ostream & out ,BigDecimalInt DecInt){
     return out;
 }
 
-bool BigDecimalInt::operator< (BigDecimalInt num) {
+bool BigDecimalInt::operator<(BigDecimalInt num)
+{
     int cnt = 0;
-    if (sign() == num.sign() && sign() == '+') {
-        if (number.size() > num.number.size()) {
+    if (sign() == num.sign() && sign() == '+')
+    {
+        if (number.size() > num.number.size())
+        {
             return false;
-        } else if (number.size() < num.number.size()) {
+        }
+        else if (number.size() < num.number.size())
+        {
             return true;
-        } else {
+        }
+        else
+        {
             if (*(this) == num)
                 return false;
-            //Here I can use the operator== overloaded to check if they are equal
-            for (int i = 0; i < number.size(); ++i) {
+            // Here I can use the operator== overloaded to check if they are equal
+            for (int i = 0; i < number.size(); ++i)
+            {
                 if (number[i] > num.number[i])
                     return false;
-//                else if (num.number[i] == number[i])
-//                    cnt++;
+                //                else if (num.number[i] == number[i])
+                //                    cnt++;
             }
         }
-//        if (cnt == number.size())
-//            return false;
+        //        if (cnt == number.size())
+        //            return false;
         return true;
-    } else if (sign() == num.sign() && sign() == '-') { // This whole condition needs checking!!
-        if (number.size() > num.number.size()) {
+    }
+    else if (sign() == num.sign() && sign() == '-')
+    { // This whole condition needs checking!!
+        if (number.size() > num.number.size())
+        {
             return true;
-        } else if (number.size() < num.number.size()) {
+        }
+        else if (number.size() < num.number.size())
+        {
             return false;
-        } else {
-            //Here I can use the operator== overloaded to check if they are equal
-            for (int i = 0; i < number.size(); ++i) {
+        }
+        else
+        {
+            // Here I can use the operator== overloaded to check if they are equal
+            for (int i = 0; i < number.size(); ++i)
+            {
                 if (number[i] > num.number[i]) // or if not working use getNumber()
                     return true;
                 else if (num.number[i] == number[i])
@@ -252,7 +278,9 @@ bool BigDecimalInt::operator< (BigDecimalInt num) {
         if (cnt == number.size())
             return true;
         return false;
-    } else {
+    }
+    else
+    {
         if (sign() == '+')
             return false;
         return true;
@@ -261,16 +289,24 @@ bool BigDecimalInt::operator< (BigDecimalInt num) {
 
 //--------------------------------------------------------------------------------------------------------------------------------
 
-bool BigDecimalInt::operator> (BigDecimalInt num) {
+bool BigDecimalInt::operator>(BigDecimalInt num)
+{
     int cnt = 0;
-    if (sign() == num.sign() && sign() == '+') {
-        if (number.size() < num.number.size()) {
+    if (sign() == num.sign() && sign() == '+')
+    {
+        if (number.size() < num.number.size())
+        {
             return false;
-        } else if (number.size() > num.number.size()) {
+        }
+        else if (number.size() > num.number.size())
+        {
             return true;
-        } else {
-            //Here I can use the operator== overloaded to check if they are equal
-            for (int i = 0; i < number.size(); ++i) {
+        }
+        else
+        {
+            // Here I can use the operator== overloaded to check if they are equal
+            for (int i = 0; i < number.size(); ++i)
+            {
                 if (number[i] < num.number[i]) // or if not working use getNumber()
                     return false;
                 else if (num.number[i] == number[i])
@@ -280,14 +316,22 @@ bool BigDecimalInt::operator> (BigDecimalInt num) {
         if (cnt == number.size())
             return false;
         return true;
-    } else if (sign() == num.sign() && sign() == '-') { // This whole condition needs checking!!
-        if (number.size() > num.number.size()) {
+    }
+    else if (sign() == num.sign() && sign() == '-')
+    { // This whole condition needs checking!!
+        if (number.size() > num.number.size())
+        {
             return false;
-        } else if (number.size() < num.number.size()) {
+        }
+        else if (number.size() < num.number.size())
+        {
             return true;
-        } else {
-            //Here I can use the operator== overloaded to check if they are equal
-            for (int i = 0; i < number.size(); ++i) {
+        }
+        else
+        {
+            // Here I can use the operator== overloaded to check if they are equal
+            for (int i = 0; i < number.size(); ++i)
+            {
                 if (number[i] > num.number[i]) // or if not working use getNumber()
                     return false;
                 else if (num.number[i] == number[i])
@@ -297,7 +341,9 @@ bool BigDecimalInt::operator> (BigDecimalInt num) {
         if (cnt == number.size())
             return false;
         return true;
-    } else {
+    }
+    else
+    {
         if (sign() == '+')
             return true;
         return false;
@@ -306,7 +352,8 @@ bool BigDecimalInt::operator> (BigDecimalInt num) {
 
 //--------------------------------------------------------------------------------------------------------------------------------
 
-BigDecimalInt BigDecimalInt::operator- (BigDecimalInt second_number) {
+BigDecimalInt BigDecimalInt::operator-(BigDecimalInt second_number)
+{
     if (this->sign_value == '+' && second_number.sign_value == '+')
     {
         return pos_neg(second_number);
@@ -319,7 +366,7 @@ BigDecimalInt BigDecimalInt::operator- (BigDecimalInt second_number) {
     {
         return neg_neg(second_number);
     }
-    else //if (this->sign_value == '+' && second_number.sign_value == '-')
+    else // if (this->sign_value == '+' && second_number.sign_value == '-')
     {
         return pos_pos(second_number);
     }
@@ -327,9 +374,11 @@ BigDecimalInt BigDecimalInt::operator- (BigDecimalInt second_number) {
 
 //--------------------------------------------------------------------------------------------------------------------------------
 
-void BigDecimalInt::removeLeadingZeroes(BigDecimalInt & result) {
+void BigDecimalInt::removeLeadingZeroes(BigDecimalInt &result)
+{
     int back = result.number.size() - 1;
-    while (!(result.number[back] - '0') && back > 0) {
+    while (!(result.number[back] - '0') && back > 0)
+    {
         result.number.erase(back);
         back--;
     }
@@ -337,42 +386,57 @@ void BigDecimalInt::removeLeadingZeroes(BigDecimalInt & result) {
 
 //--------------------------------------------------------------------------------------------------------------------------------
 
-BigDecimalInt BigDecimalInt::pos_neg(BigDecimalInt &num) {
+BigDecimalInt BigDecimalInt::pos_neg(BigDecimalInt &num)
+{
     BigDecimalInt result;
     string greater_num, smaller_num;
 
-    if (num.number.size() > number.size()) {
+    if (num.number.size() > number.size())
+    {
         greater_num = num.number;
         smaller_num = number;
-    } else if (num.number.size() < number.size()) {
+    }
+    else if (num.number.size() < number.size())
+    {
         greater_num = number;
         smaller_num = num.number;
-    } else {
+    }
+    else
+    {
         bool num1_is_greater = false;
-        for (int i = number.size() - 1; i >= 0; --i) {
-            if (number[i] > num.number[i]) {
+        for (int i = number.size() - 1; i >= 0; --i)
+        {
+            if (number[i] > num.number[i])
+            {
                 greater_num = number;
                 smaller_num = num.number;
                 num1_is_greater = true;
                 break;
             }
         }
-        if (!num1_is_greater) {
+        if (!num1_is_greater)
+        {
             greater_num = num.number;
             smaller_num = number;
         }
     }
 
-    for (int i = smaller_num.size() - 1; i >= 0; --i) {
-        if (greater_num[i] >= smaller_num[i]) {
+    for (int i = smaller_num.size() - 1; i >= 0; --i)
+    {
+        if (greater_num[i] >= smaller_num[i])
+        {
             int diff = (greater_num[i] - '0') - (smaller_num[i] - '0');
-            result.number += (char) (diff + '0');
-        } else {
-            for (int j = i - 1; j >= 0; --j) {
-                if (greater_num[j] - '0') {
+            result.number += (char)(diff + '0');
+        }
+        else
+        {
+            for (int j = i - 1; j >= 0; --j)
+            {
+                if (greater_num[j] - '0')
+                {
                     greater_num[j]--;
                     int diff = (greater_num[i] - '0' + 10) - (smaller_num[i] - '0');
-                    result.number += (char) (diff + '0');
+                    result.number += (char)(diff + '0');
                 }
             }
         }
@@ -386,42 +450,57 @@ BigDecimalInt BigDecimalInt::pos_neg(BigDecimalInt &num) {
 
 //--------------------------------------------------------------------------------------------------------------------------------
 
-BigDecimalInt BigDecimalInt::rev_pos_neg(BigDecimalInt &num1, BigDecimalInt &num2) {
+BigDecimalInt BigDecimalInt::rev_pos_neg(BigDecimalInt &num1, BigDecimalInt &num2)
+{
     BigDecimalInt result;
     string greater_num, smaller_num;
 
-    if (num1.number.size() > num2.number.size()) {
+    if (num1.number.size() > num2.number.size())
+    {
         greater_num = num1.number;
         smaller_num = num2.number;
-    } else if (num1.number.size() < num2.number.size()) {
+    }
+    else if (num1.number.size() < num2.number.size())
+    {
         greater_num = num2.number;
         smaller_num = num1.number;
-    } else {
+    }
+    else
+    {
         bool num1_is_greater = false;
-        for (int i = num2.number.size() - 1; i >= 0; --i) {
-            if (num2.number[i] > num1.number[i]) {
+        for (int i = num2.number.size() - 1; i >= 0; --i)
+        {
+            if (num2.number[i] > num1.number[i])
+            {
                 greater_num = num2.number;
                 smaller_num = num1.number;
                 num1_is_greater = true;
                 break;
             }
         }
-        if (!num1_is_greater) {
+        if (!num1_is_greater)
+        {
             greater_num = num1.number;
             smaller_num = num2.number;
         }
     }
 
-    for (int i = smaller_num.size() - 1; i >= 0; --i) {
-        if (greater_num[i] >= smaller_num[i]) {
+    for (int i = smaller_num.size() - 1; i >= 0; --i)
+    {
+        if (greater_num[i] >= smaller_num[i])
+        {
             int diff = (greater_num[i] - '0') - (smaller_num[i] - '0');
-            result.number += (char) (diff + '0');
-        } else {
-            for (int j = i - 1; j >= 0; --j) {
-                if (greater_num[j] - '0') {
+            result.number += (char)(diff + '0');
+        }
+        else
+        {
+            for (int j = i - 1; j >= 0; --j)
+            {
+                if (greater_num[j] - '0')
+                {
                     greater_num[j]--;
                     int diff = (greater_num[i] - '0' + 10) - (smaller_num[i] - '0');
-                    result.number += (char) (diff + '0');
+                    result.number += (char)(diff + '0');
                 }
             }
         }
@@ -432,5 +511,3 @@ BigDecimalInt BigDecimalInt::rev_pos_neg(BigDecimalInt &num1, BigDecimalInt &num
     reverse(result.number.begin(), result.number.end());
     return result;
 }
-
-
