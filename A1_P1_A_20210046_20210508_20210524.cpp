@@ -214,8 +214,6 @@ ostream& operator<<(ostream & out ,BigDecimalInt DecInt){
     return out;
 }
 
-#include "A1_P1_A_20210046_20210508_20210524.h"
-
 bool BigDecimalInt::operator< (BigDecimalInt num) {
     int cnt = 0;
     if (sign() == num.sign() && sign() == '+') {
