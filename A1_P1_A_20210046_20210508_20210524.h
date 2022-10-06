@@ -3,22 +3,35 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <regex>
 using namespace std;
 
-class BigDecimalInt{
+class BigDecimalInt
+{
 private:
     string number;
+    int size_of_number;
+    char sign_value;
+
 public:
-    BigDecimalInt (string decStr);
-    BigDecimalInt (int decInt);
-    BigDecimalInt operator+ (BigDecimalInt anotherDec);
-    BigDecimalInt operator- (BigDecimalInt);
-    bool operator< (BigDecimalInt anotherDec);
-    bool operator> (BigDecimalInt anotherDec);
-    bool operator==(BigDecimalInt anotherDec);
-    BigDecimalInt operator= (BigDecimalInt anotherDec);
+    BigDecimalInt();       // empty constructor
+    BigDecimalInt(string); // reciving a number
+                           //    BigDecimalInt(int);
+    void set_size(int);
+    bool validate_number(string);
+    void extract_num_sign_size(string);
+    BigDecimalInt operator+(BigDecimalInt &);
+    BigDecimalInt pos_pos(BigDecimalInt &);
+    BigDecimalInt pos_neg(BigDecimalInt &);
+    BigDecimalInt neg_neg(BigDecimalInt &);
+    void removeLeadingZeroes(BigDecimalInt &);
+    // BigDecimalInt operator-(BigDecimalInt);
+    // bool operator<(BigDecimalInt);
+    // bool operator>(BigDecimalInt);
+    // bool operator==(BigDecimalInt);
+    // BigDecimalInt operator=(BigDecimalInt);
     int size();
-    int sign();
-    friend ostream& operator << (ostream& out, BigDecimalInt b);
+    char sign();
+    // friend ostream &operator<<(ostream &, BigDecimalInt);
 };
 #endif
