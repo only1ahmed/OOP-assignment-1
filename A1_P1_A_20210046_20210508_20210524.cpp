@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #include "A1_P1_A_20210046_20210508_20210524.h"
 
 BigDecimalInt ::BigDecimalInt()
@@ -187,3 +188,6 @@ BigDecimalInt BigDecimalInt ::neg_neg(BigDecimalInt &second_number)
     result.sign_value = '-';
     return result;
 }
+=======
+
+>>>>>>> cea32f6cbdd36ea2f59614471816ebe3aa1cd5e1
