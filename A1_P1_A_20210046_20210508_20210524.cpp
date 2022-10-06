@@ -54,23 +54,22 @@ void BigDecimalInt ::extract_num_sign_size(string value_of_number)
         sign_value = '+';
     }
     size_of_number = value_of_number.size() - start;
-    number = value_of_number.substr(start, size_of_number - start);
+    number = value_of_number.substr(start, size_of_number);
 }
 //--------------------------------------------------------------------------------------------------------------------------------
-BigDecimalInt BigDecimalInt ::operator+(BigDecimalInt second_number)
+BigDecimalInt BigDecimalInt ::operator+(BigDecimalInt &second_number)
 {
     if (this->sign_value == '+' && second_number.sign_value == '+')
     {
         return pos_pos(second_number);
     }
-    else if (this->sign_value == '-' && second_number.sign_value == '+')
+    else if ((this->sign_value == '-' && second_number.sign_value == '+') || (this->sign_value == '+' && second_number.sign_value == '-'))
     {
-    }
-    else if (this->sign_value == '+' && second_number.sign_value == '-')
-    {
+        return pos_neg(second_number);
     }
     else
     {
+        return neg_neg(second_number);
     }
 }
 
@@ -96,74 +95,77 @@ char BigDecimalInt ::sign()
     return sign_value;
 }
 //--------------------------------------------------------------------------------------------------------------------------------
-BigDecimalInt BigDecimalInt::pos_pos(BigDecimalInt second_number)
+BigDecimalInt BigDecimalInt::pos_pos(BigDecimalInt &second_number)
 {
     BigDecimalInt result;
     result.set_size((max(this->size_of_number, second_number.size_of_number) + 1));
     int carry = 0;
     if (this->size_of_number < second_number.size_of_number) // the second number is bigger
     {
-        for (int i = this->size_of_number - 1; i >= 1; i--)
+        int delta = second_number.size_of_number - this->size_of_number;
+        for (int i = this->size_of_number - 1; i >= 0; i--)
         {
-            int temp = (second_number.number[i] - '0') + (this->number[i] - '0') + carry;
+            int temp = (second_number.number[i + delta] - '0') + (this->number[i] - '0') + carry;
             if (temp > 9)
             {
                 temp -= 10;
                 carry = 1;
-                result.number[i] = (char)(temp + '0');
+                result.number[i + delta + 1] = (char)(temp + '0');
             }
             else
             {
                 carry = 0;
-                result.number[i] = (char)(temp + '0');
+                result.number[i + delta + 1] = (char)(temp + '0');
             }
         }
-        for (int i = second_number.size_of_number - 1; i >= this->size_of_number; i--)
+        for (int i = delta - 1; i >= 0; i--)
         {
             int temp = (second_number.number[i] - '0') + carry;
             if (temp > 9)
             {
                 temp -= 10;
                 carry = 1;
-                result.number[i] = (char)(temp + '0');
+                result.number[i + 1] = (char)(temp + '0');
             }
             else
             {
                 carry = 0;
-                result.number[i] = (char)(temp + '0');
+                result.number[i + 1] = (char)(temp + '0');
             }
         }
     }
     else
     {
-        for (int i = second_number.size_of_number - 1; i >= 1; i--)
+        int delta = this->size_of_number - second_number.size_of_number;
+
+        for (int i = second_number.size_of_number - 1; i >= 0; i--)
         {
-            int temp = (second_number.number[i] - '0') + (this->number[i] - '0') + carry;
+            int temp = (second_number.number[i] - '0') + (this->number[i + delta] - '0') + carry;
             if (temp > 9)
             {
                 temp -= 10;
                 carry = 1;
-                result.number[i] = (char)(temp + '0');
+                result.number[i + delta + 1] = (char)(temp + '0');
             }
             else
             {
                 carry = 0;
-                result.number[i] = (char)(temp + '0');
+                result.number[i + delta + 1] = (char)(temp + '0');
             }
         }
-        for (int i = this->size_of_number - 1; i >= second_number.size_of_number; i--)
+        for (int i = delta - 1; i >= 0; i--)
         {
             int temp = (this->number[i] - '0') + carry;
             if (temp > 9)
             {
                 temp -= 10;
                 carry = 1;
-                result.number[i] = (char)(temp + '0');
+                result.number[i + 1] = (char)(temp + '0');
             }
             else
             {
                 carry = 0;
-                result.number[i] = (char)(temp + '0');
+                result.number[i + 1] = (char)(temp + '0');
             }
         }
     }
@@ -172,5 +174,88 @@ BigDecimalInt BigDecimalInt::pos_pos(BigDecimalInt second_number)
         result.number[0] = 1;
     }
     result.sign_value = '+';
+    reverse(result.number.begin(), result.number.end());
+    removeLeadingZeroes(result);
+    reverse(result.number.begin(), result.number.end());
+    result.size_of_number = result.number.size();
+    return result;
+}
+BigDecimalInt BigDecimalInt::pos_neg(BigDecimalInt &num)
+{
+    BigDecimalInt result;
+    // BigDecimalInt nw = *(this);
+
+    string greater_num, smaller_num;
+    if (num.number.size() > number.size())
+    {
+        greater_num = num.number;
+        smaller_num = number;
+    }
+    else if (num.number.size() < number.size())
+    {
+        greater_num = number;
+        smaller_num = num.number;
+    }
+    else
+    {
+        bool num1_is_greater = false;
+        for (int i = number.size() - 1; i >= 0; --i)
+        {
+            if (number[i] > num.number[i])
+            {
+                greater_num = number;
+                smaller_num = num.number;
+                num1_is_greater = true;
+                break;
+            }
+        }
+        if (!num1_is_greater)
+        {
+            greater_num = num.number;
+            smaller_num = number;
+        }
+    }
+
+    for (int i = smaller_num.size() - 1; i >= 0; --i)
+    {
+        if (greater_num[i] >= smaller_num[i])
+        {
+            int diff = (greater_num[i] - '0') - (smaller_num[i] - '0');
+            result.number += (char)(diff + '0');
+        }
+        else
+        {
+            for (int j = i - 1; j >= 0; --j)
+            {
+                if (greater_num[j] - '0')
+                {
+                    greater_num[j]--;
+                    int diff = (greater_num[i] - '0' + 10) - (smaller_num[i] - '0');
+                    result.number += (char)(diff + '0');
+                }
+            }
+        }
+    }
+    removeLeadingZeroes(result);
+    if (greater_num == num.number && greater_num != number)
+        result.number += '-';
+    reverse(result.number.begin(), result.number.end());
+    return result;
+}
+
+void BigDecimalInt::removeLeadingZeroes(BigDecimalInt &result)
+{
+    int back = result.number.size() - 1;
+    while (!(result.number[back] - '0') && back > 0)
+    {
+        result.number.erase(back);
+        back--;
+    }
+}
+
+BigDecimalInt BigDecimalInt ::neg_neg(BigDecimalInt &second_number)
+{
+    BigDecimalInt result = pos_pos(second_number);
+    result.sign_value = '-';
     return result;
 }
