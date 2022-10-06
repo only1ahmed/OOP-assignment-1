@@ -27,3 +27,15 @@ git config --global alias.lg 'log --graph --oneline --decorate --all'
 git merge testBranch
 git lg
 git branch -d testBranch # delete the branch
+---------------------------------------------------------------------------------------------
+cd - change directory
+directory - the same thing as a folder
+mkdir - make a directory
+echo - print a message to the screen or to a file if > (redirect) is present.
+git init - start or initialize a git repository
+git add - put a file into the staging area, so that git starts tracking it
+git commit - send files in the staging/index area into the history (the git repository)
+git log --graph --oneline --decorate --all - view the commit history in the git repository and the branches, with each commit as one line.
+git branch - An individual line of commit history that contains files that may differ from other branches.
+git checkout - A way to move across the git commits and branches.
+git merge - Combine a branch into the current checked out branch (i.e. the branch you are on).
