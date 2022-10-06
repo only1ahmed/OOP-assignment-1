@@ -27,5 +27,12 @@ public:
     int size();
     char sign();
     friend ostream &operator<<(ostream &, BigDecimalInt);
+    BigDecimalInt operator-(BigDecimalInt);
+    bool operator<(BigDecimalInt);
+    bool operator>(BigDecimalInt);
+    //additional functions
+    void removeLeadingZeroes(BigDecimalInt &);
+    BigDecimalInt pos_neg(BigDecimalInt &);
+    BigDecimalInt rev_pos_neg(BigDecimalInt &, BigDecimalInt &);
 };
 #endif
