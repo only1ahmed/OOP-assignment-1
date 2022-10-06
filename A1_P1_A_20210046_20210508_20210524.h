@@ -16,7 +16,7 @@ private:
 public:
     BigDecimalInt();       // empty constructor
     BigDecimalInt(string); // reciving a number
-                           //    BigDecimalInt(int);
+    //    BigDecimalInt(int);
     void set_size(int);
     bool validate_number(string);
     void extract_num_sign_size(string);
