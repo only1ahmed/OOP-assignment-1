@@ -186,4 +186,8 @@ BigDecimalInt BigDecimalInt ::neg_neg(BigDecimalInt &second_number)
     BigDecimalInt result = pos_pos(second_number);
     result.sign_value = '-';
     return result;
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 72df5e58980600e8ef681d3302153274892bfd90

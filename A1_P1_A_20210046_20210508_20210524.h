@@ -26,4 +26,8 @@ public:
     int size();
     char sign();
 };
+<<<<<<< HEAD
 #endif
+=======
+#endif
+>>>>>>> 72df5e58980600e8ef681d3302153274892bfd90
