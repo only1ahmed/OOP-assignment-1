@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #ifndef A1_P1_A_20210046_20210508_20210524_H
 #define A1_P1_A_20210046_20210508_20210524_H
 #include <iostream>
@@ -28,6 +27,3 @@ public:
     char sign();
 };
 #endif
-=======
-
->>>>>>> cea32f6cbdd36ea2f59614471816ebe3aa1cd5e1
