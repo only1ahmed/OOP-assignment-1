@@ -187,3 +187,30 @@ BigDecimalInt BigDecimalInt ::neg_neg(BigDecimalInt &second_number)
     result.sign_value = '-';
     return result;
 }
+
+bool BigDecimalInt:: operator== (BigDecimalInt anotherDec){
+    if ((*this).number.size() != anotherDec.number.size() || (*this).sign() != anotherDec.sign()){
+        return false;
+    }
+    for (auto i = 0;i < number.size();i++){
+        if ((*this).number[i] != anotherDec.number[i]){
+            return false;
+        }
+    }
+    return true;
+}
+
+BigDecimalInt BigDecimalInt:: operator=(BigDecimalInt anotherDec){
+    number = anotherDec.number;
+    sign_value = anotherDec.sign();
+    return (*this);
+}
+
+ostream& operator<<(ostream & out ,BigDecimalInt DecInt){
+    if (DecInt.sign() == '-')
+        out << DecInt.sign();
+
+    cout << DecInt.number;
+    return out;
+}
+

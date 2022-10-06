@@ -22,8 +22,10 @@ public:
     BigDecimalInt operator+(BigDecimalInt &);
     BigDecimalInt pos_pos(BigDecimalInt &);
     BigDecimalInt neg_neg(BigDecimalInt &);
-
+    bool operator==(BigDecimalInt);
+    BigDecimalInt& operator=(BigDecimalInt);
     int size();
     char sign();
+    friend ostream &operator<<(ostream &, BigDecimalInt);
 };
 #endif
