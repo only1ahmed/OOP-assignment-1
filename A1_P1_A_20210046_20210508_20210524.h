@@ -5,20 +5,22 @@
 #include <vector>
 using namespace std;
 
-class BigDecimalInt{
+class BigDecimalInt
+{
 private:
     string number;
+
 public:
-    BigDecimalInt (string decStr);
-    BigDecimalInt (int decInt);
-    BigDecimalInt operator+ (BigDecimalInt anotherDec);
-    BigDecimalInt operator- (BigDecimalInt);
-    bool operator< (BigDecimalInt anotherDec);
-    bool operator> (BigDecimalInt anotherDec);
-    bool operator==(BigDecimalInt anotherDec);
-    BigDecimalInt operator= (BigDecimalInt anotherDec);
+    BigDecimalInt(string);
+    BigDecimalInt(int);
+    BigDecimalInt operator+(BigDecimalInt);
+    BigDecimalInt operator-(BigDecimalInt);
+    bool operator<(BigDecimalInt);
+    bool operator>(BigDecimalInt);
+    bool operator==(BigDecimalInt);
+    BigDecimalInt operator=(BigDecimalInt);
     int size();
     int sign();
-    friend ostream& operator << (ostream& out, BigDecimalInt b);
+    friend ostream &operator<<(ostream &, BigDecimalInt);
 };
 #endif
