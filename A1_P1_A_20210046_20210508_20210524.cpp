@@ -60,10 +60,11 @@ void BigDecimalInt ::extract_num_sign_size(string value_of_number)
 BigDecimalInt BigDecimalInt ::operator+(BigDecimalInt second_number)
 {
     BigDecimalInt result;
+    result.set_size((max(this->size_of_number, second_number.size_of_number) + 1));
     int carry = 0;
     if (this->size_of_number < second_number.size_of_number) // the second number is bigger
     {
-        for (int i = this->size_of_number - 1; i >= 0; i--)
+        for (int i = this->size_of_number - 1; i >= 1; i--)
         {
             int temp = (second_number.number[i] - '0') + (this->number[i] - '0') + carry;
             if (temp > 9)
@@ -96,7 +97,7 @@ BigDecimalInt BigDecimalInt ::operator+(BigDecimalInt second_number)
     }
     else
     {
-        for (int i = second_number.size_of_number - 1; i >= 0; i--)
+        for (int i = second_number.size_of_number - 1; i >= 1; i--)
         {
             int temp = (second_number.number[i] - '0') + (this->number[i] - '0') + carry;
             if (temp > 9)
@@ -127,7 +128,20 @@ BigDecimalInt BigDecimalInt ::operator+(BigDecimalInt second_number)
             }
         }
     }
+    if (carry)
+    {
+        result.number[0] = 1;
+    }
     return result;
+}
+
+//--------------------------------------------------------------------------------------------------------------------------------
+void BigDecimalInt ::set_size(int sz)
+{
+    for (int i = 0; i < sz; i++)
+    {
+        number.push_back('0');
+    }
 }
 //--------------------------------------------------------------------------------------------------------------------------------
 
