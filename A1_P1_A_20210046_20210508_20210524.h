@@ -3,25 +3,35 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <regex>
 using namespace std;
 
 class BigDecimalInt
 {
 private:
     string number;
+    int size_of_number;
+    char sign_value;
+
 public:
-    BigDecimalInt(string num){
-        number = num;
-    }
-//        BigDecimalInt(int);
-//        BigDecimalInt operator+(BigDecimalInt);
-//        BigDecimalInt operator-(BigDecimalInt);
-//        bool operator<(BigDecimalInt);
-//        bool operator>(BigDecimalInt);
+    BigDecimalInt();       // empty constructor
+    BigDecimalInt(string); // receiving a number
+    //    BigDecimalInt(int);
+    void set_size(int);
+    bool validate_number(string);
+    void extract_num_sign_size(string);
+//    BigDecimalInt operator+(BigDecimalInt &);
+//    BigDecimalInt pos_pos(BigDecimalInt &);
+//    BigDecimalInt pos_neg(BigDecimalInt &);
+//    BigDecimalInt neg_neg(BigDecimalInt &);
+    void removeLeadingZeroes(BigDecimalInt &);
+    // BigDecimalInt operator-(BigDecimalInt);
+    // bool operator<(BigDecimalInt);
+    // bool operator>(BigDecimalInt);
     bool operator==(BigDecimalInt);
     BigDecimalInt operator=(BigDecimalInt);
-//        int size();
-//        int sign();
+    int size();
+    char sign();
     friend ostream &operator<<(ostream &, BigDecimalInt);
 };
 #endif
