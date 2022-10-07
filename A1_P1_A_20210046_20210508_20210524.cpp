@@ -187,7 +187,7 @@ ostream& operator<<(ostream & out ,BigDecimalInt DecInt){
     if (DecInt.sign() == '-')
         out << DecInt.sign();
 
-    cout << DecInt.number;
+    out << DecInt.number;
     return out;
 }
 
@@ -303,6 +303,7 @@ BigDecimalInt BigDecimalInt::pos_neg(BigDecimalInt &num) {
     reverse((this)->number.begin(), (this)->number.end());
     reverse(num.number.begin(), num.number.end());
     reverse(result.number.begin(), result.number.end());
+    result.size_of_number = result.number.size();
     return result;
 }
 
@@ -339,7 +340,7 @@ BigDecimalInt BigDecimalInt::rev_pos_neg(BigDecimalInt &num1, BigDecimalInt &num
     }
 
     if (greater_num == num2.number && greater_num != smaller_num)
-        result.sign_value += '-';
+        result.sign_value = '-';
 
     for (int i = smaller_num.size() - 1; i >= 0; --i) {
         if (greater_num[i] >= smaller_num[i]) {
@@ -365,6 +366,7 @@ BigDecimalInt BigDecimalInt::rev_pos_neg(BigDecimalInt &num1, BigDecimalInt &num
     reverse(num2.number.begin(), num2.number.end());
 
     reverse(result.number.begin(), result.number.end());
+    result.size_of_number = result.number.size();
     return result;
 }
 
