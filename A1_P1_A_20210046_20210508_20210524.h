@@ -15,24 +15,27 @@ private:
 
 public:
     BigDecimalInt();       // empty constructor
-    BigDecimalInt(string); // reciving a number
+    explicit BigDecimalInt(string); // receiving a number
+
+    BigDecimalInt operator+ (BigDecimalInt &);
+    BigDecimalInt operator- (BigDecimalInt);
+    bool operator< (BigDecimalInt);
+    bool operator> (BigDecimalInt);
+    bool operator== (BigDecimalInt);
+    BigDecimalInt& operator= (BigDecimalInt);
+    int size();
+    char sign();
+    friend ostream &operator<< (ostream &, BigDecimalInt);
+
+    // additional functions
     void set_size(int);
     bool validate_number(string);
     void extract_num_sign_size(string);
-    BigDecimalInt operator+(BigDecimalInt &);
-    BigDecimalInt pos_pos(BigDecimalInt &);
-    BigDecimalInt neg_neg(BigDecimalInt &);
-    bool operator==(BigDecimalInt);
-    BigDecimalInt operator=(BigDecimalInt);
-    int size();
-    char sign();
-    friend ostream &operator<<(ostream &, BigDecimalInt);
-    BigDecimalInt operator-(BigDecimalInt);
-    bool operator<(BigDecimalInt);
-    bool operator>(BigDecimalInt);
-    // additional functions
     void removeLeadingZeroes(BigDecimalInt &);
     BigDecimalInt pos_neg(BigDecimalInt &);
+    BigDecimalInt pos_pos(BigDecimalInt &);
+    BigDecimalInt neg_neg(BigDecimalInt &);
     BigDecimalInt rev_pos_neg(BigDecimalInt &, BigDecimalInt &);
 };
+
 #endif
