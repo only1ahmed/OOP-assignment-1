@@ -14,18 +14,18 @@ private:
     char sign_value;
 
 public:
-    BigDecimalInt();       // empty constructor
+    BigDecimalInt();                // empty constructor
     explicit BigDecimalInt(string); // receiving a number
-
-    BigDecimalInt operator+ (BigDecimalInt &);
-    BigDecimalInt operator- (BigDecimalInt);
-    bool operator< (BigDecimalInt);
-    bool operator> (BigDecimalInt);
-    bool operator== (BigDecimalInt);
-    BigDecimalInt& operator= (BigDecimalInt);
+    explicit BigDecimalInt(int);
+    BigDecimalInt operator+(BigDecimalInt &);
+    BigDecimalInt operator-(BigDecimalInt);
+    bool operator<(BigDecimalInt);
+    bool operator>(BigDecimalInt);
+    bool operator==(BigDecimalInt);
+    BigDecimalInt &operator=(BigDecimalInt);
     int size();
     char sign();
-    friend ostream &operator<< (ostream &, BigDecimalInt);
+    friend ostream &operator<<(ostream &, BigDecimalInt);
 
     // additional functions
     void set_size(int);

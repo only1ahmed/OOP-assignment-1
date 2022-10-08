@@ -27,6 +27,15 @@ BigDecimalInt::BigDecimalInt(string value_of_number) // setting the number and i
     }
 }
 //--------------------------------------------------------------------------------------------------------------------------------
+BigDecimalInt::BigDecimalInt(int value_of_number)
+{
+    string number = to_string(value_of_number);
+    extract_num_sign_size(number);
+    reverse((this)->number.begin(), (this)->number.end());
+    removeLeadingZeroes(*(this));
+    reverse((this)->number.begin(), (this)->number.end());
+}
+//--------------------------------------------------------------------------------------------------------------------------------
 
 BigDecimalInt BigDecimalInt ::operator+(BigDecimalInt &second_number)
 {
@@ -50,7 +59,8 @@ BigDecimalInt BigDecimalInt ::operator+(BigDecimalInt &second_number)
 
 //--------------------------------------------------------------------------------------------------------------------------------
 
-BigDecimalInt BigDecimalInt::operator- (BigDecimalInt second_number) {
+BigDecimalInt BigDecimalInt::operator-(BigDecimalInt second_number)
+{
     if (this->sign_value == '+' && second_number.sign_value == '+')
     {
         return pos_neg(second_number);
@@ -63,7 +73,7 @@ BigDecimalInt BigDecimalInt::operator- (BigDecimalInt second_number) {
     {
         return neg_neg(second_number);
     }
-    else //if (this->sign_value == '+' && second_number.sign_value == '-')
+    else // if (this->sign_value == '+' && second_number.sign_value == '-')
     {
         return pos_pos(second_number);
     }
@@ -71,36 +81,54 @@ BigDecimalInt BigDecimalInt::operator- (BigDecimalInt second_number) {
 
 //--------------------------------------------------------------------------------------------------------------------------------
 
-bool BigDecimalInt::operator< (BigDecimalInt num) {
-    if (sign() == num.sign() && sign() == '+') {
-        if (number.size() > num.number.size()) {
+bool BigDecimalInt::operator<(BigDecimalInt num)
+{
+    if (sign() == num.sign() && sign() == '+')
+    {
+        if (number.size() > num.number.size())
+        {
             return false;
-        } else if (number.size() < num.number.size()) {
+        }
+        else if (number.size() < num.number.size())
+        {
             return true;
-        } else {
+        }
+        else
+        {
             if (*(this) == num)
                 return false;
-            for (int i = 0; i < number.size(); ++i) {
+            for (int i = 0; i < number.size(); ++i)
+            {
                 if (number[i] > num.number[i])
                     return false;
             }
         }
         return true;
-    } else if (sign() == num.sign() && sign() == '-') {
-        if (number.size() > num.number.size()) {
+    }
+    else if (sign() == num.sign() && sign() == '-')
+    {
+        if (number.size() > num.number.size())
+        {
             return true;
-        } else if (number.size() < num.number.size()) {
+        }
+        else if (number.size() < num.number.size())
+        {
             return false;
-        } else {
+        }
+        else
+        {
             if (*(this) == num)
                 return false;
-            for (int i = 0; i < number.size(); ++i) {
+            for (int i = 0; i < number.size(); ++i)
+            {
                 if (number[i] < num.number[i])
                     return false;
             }
         }
         return true;
-    } else {
+    }
+    else
+    {
         if (sign() == '+')
             return false;
         return true;
@@ -109,36 +137,54 @@ bool BigDecimalInt::operator< (BigDecimalInt num) {
 
 //--------------------------------------------------------------------------------------------------------------------------------
 
-bool BigDecimalInt::operator> (BigDecimalInt num) {
-    if (sign() == num.sign() && sign() == '+') {
+bool BigDecimalInt::operator>(BigDecimalInt num)
+{
+    if (sign() == num.sign() && sign() == '+')
+    {
         if (*(this) == num)
             return false;
-        if (number.size() < num.number.size()) {
+        if (number.size() < num.number.size())
+        {
             return false;
-        } else if (number.size() > num.number.size()) {
+        }
+        else if (number.size() > num.number.size())
+        {
             return true;
-        } else {
-            for (int i = 0; i < number.size(); ++i) {
+        }
+        else
+        {
+            for (int i = 0; i < number.size(); ++i)
+            {
                 if (number[i] < num.number[i])
                     return false;
             }
         }
         return true;
-    } else if (sign() == num.sign() && sign() == '-') {
+    }
+    else if (sign() == num.sign() && sign() == '-')
+    {
         if (*(this) == num)
             return false;
-        if (number.size() > num.number.size()) {
+        if (number.size() > num.number.size())
+        {
             return false;
-        } else if (number.size() < num.number.size()) {
+        }
+        else if (number.size() < num.number.size())
+        {
             return true;
-        } else {
-            for (int i = 0; i < number.size(); ++i) {
+        }
+        else
+        {
+            for (int i = 0; i < number.size(); ++i)
+            {
                 if (number[i] > num.number[i])
                     return false;
             }
         }
         return true;
-    } else {
+    }
+    else
+    {
         if (sign() == '+')
             return true;
         return false;
@@ -147,12 +193,16 @@ bool BigDecimalInt::operator> (BigDecimalInt num) {
 
 //--------------------------------------------------------------------------------------------------------------------------------
 
-bool BigDecimalInt:: operator== (BigDecimalInt anotherDec){
-    if ((*this).number.size() != anotherDec.number.size() || (*this).sign() != anotherDec.sign()){
+bool BigDecimalInt::operator==(BigDecimalInt anotherDec)
+{
+    if ((*this).number.size() != anotherDec.number.size() || (*this).sign() != anotherDec.sign())
+    {
         return false;
     }
-    for (auto i = 0;i < number.size();i++){
-        if ((*this).number[i] != anotherDec.number[i]){
+    for (auto i = 0; i < number.size(); i++)
+    {
+        if ((*this).number[i] != anotherDec.number[i])
+        {
             return false;
         }
     }
@@ -161,7 +211,8 @@ bool BigDecimalInt:: operator== (BigDecimalInt anotherDec){
 
 //--------------------------------------------------------------------------------------------------------------------------------
 
-BigDecimalInt& BigDecimalInt::operator=(BigDecimalInt anotherDec){
+BigDecimalInt &BigDecimalInt::operator=(BigDecimalInt anotherDec)
+{
     number = anotherDec.number;
     sign_value = anotherDec.sign();
     return (*this);
@@ -183,7 +234,8 @@ char BigDecimalInt ::sign()
 
 //--------------------------------------------------------------------------------------------------------------------------------
 
-ostream& operator<<(ostream & out ,BigDecimalInt DecInt){
+ostream &operator<<(ostream &out, BigDecimalInt DecInt)
+{
     if (DecInt.sign() == '-')
         out << DecInt.sign();
 
@@ -193,9 +245,11 @@ ostream& operator<<(ostream & out ,BigDecimalInt DecInt){
 
 //--------------------------------------------------------------------------------------------------------------------------------
 
-void BigDecimalInt::removeLeadingZeroes(BigDecimalInt & result) {
+void BigDecimalInt::removeLeadingZeroes(BigDecimalInt &result)
+{
     int back = result.number.size() - 1;
-    while (!(result.number[back] - '0') && back > 0) {
+    while (!(result.number[back] - '0') && back > 0)
+    {
         result.number.erase(back);
         back--;
     }
@@ -246,30 +300,40 @@ void BigDecimalInt ::set_size(int sz)
 
 //--------------------------------------------------------------------------------------------------------------------------------
 
-BigDecimalInt BigDecimalInt::pos_neg(BigDecimalInt &num) {
+BigDecimalInt BigDecimalInt::pos_neg(BigDecimalInt &num)
+{
     BigDecimalInt result;
     string greater_num, smaller_num;
 
-    if (number.size() < num.number.size()) {
+    if (number.size() < num.number.size())
+    {
         reverse(number.begin(), number.end());
-        while (number.size() < num.number.size()) {
+        while (number.size() < num.number.size())
+        {
             number += '0';
         }
         reverse(number.begin(), number.end());
-    } else if (number.size() > num.number.size()) {
+    }
+    else if (number.size() > num.number.size())
+    {
         reverse(num.number.begin(), num.number.end());
-        while (number.size() > num.number.size()) {
+        while (number.size() > num.number.size())
+        {
             num.number += '0';
         }
         reverse(num.number.begin(), num.number.end());
     }
 
-    for (int i = 0; i < number.size(); ++i) {
-        if (number[i] > num.number[i]) {
+    for (int i = 0; i < number.size(); ++i)
+    {
+        if (number[i] > num.number[i])
+        {
             greater_num = number;
             smaller_num = num.number;
             break;
-        } else if (number[i] < num.number[i]){
+        }
+        else if (number[i] < num.number[i])
+        {
             greater_num = num.number;
             smaller_num = number;
             break;
@@ -279,16 +343,22 @@ BigDecimalInt BigDecimalInt::pos_neg(BigDecimalInt &num) {
     if (greater_num == num.number && greater_num != number)
         result.sign_value = '-';
 
-    for (int i = smaller_num.size() - 1; i >= 0; --i) {
-        if (greater_num[i] >= smaller_num[i]) {
+    for (int i = smaller_num.size() - 1; i >= 0; --i)
+    {
+        if (greater_num[i] >= smaller_num[i])
+        {
             int diff = (greater_num[i] - '0') - (smaller_num[i] - '0');
-            result.number += (char) (diff + '0');
-        } else {
-            for (int j = i - 1; j >= 0; --j) {
-                if (greater_num[j] - '0') {
+            result.number += (char)(diff + '0');
+        }
+        else
+        {
+            for (int j = i - 1; j >= 0; --j)
+            {
+                if (greater_num[j] - '0')
+                {
                     greater_num[j]--;
                     int diff = (greater_num[i] - '0' + 10) - (smaller_num[i] - '0');
-                    result.number += (char) (diff + '0');
+                    result.number += (char)(diff + '0');
                     break;
                 }
             }
@@ -309,30 +379,40 @@ BigDecimalInt BigDecimalInt::pos_neg(BigDecimalInt &num) {
 
 //--------------------------------------------------------------------------------------------------------------------------------
 
-BigDecimalInt BigDecimalInt::rev_pos_neg(BigDecimalInt &num1, BigDecimalInt &num2) {
+BigDecimalInt BigDecimalInt::rev_pos_neg(BigDecimalInt &num1, BigDecimalInt &num2)
+{
     BigDecimalInt result;
     string greater_num, smaller_num;
 
-    if (num1.size() < num2.size()) {
+    if (num1.size() < num2.size())
+    {
         reverse(num1.number.begin(), num1.number.end());
-        while (num1.number.size() < num2.number.size()) {
+        while (num1.number.size() < num2.number.size())
+        {
             num1.number += '0';
         }
         reverse(num1.number.begin(), num1.number.end());
-    } else if (num1.size() > num2.size()) {
+    }
+    else if (num1.size() > num2.size())
+    {
         reverse(num2.number.begin(), num2.number.end());
-        while (num1.number.size() > num2.number.size()) {
+        while (num1.number.size() > num2.number.size())
+        {
             num2.number += '0';
         }
         reverse(num2.number.begin(), num2.number.end());
     }
 
-    for (int i = 0; i < num2.number.size(); ++i) {
-        if (num2.number[i] > num1.number[i]) {
+    for (int i = 0; i < num2.number.size(); ++i)
+    {
+        if (num2.number[i] > num1.number[i])
+        {
             greater_num = num2.number;
             smaller_num = num1.number;
             break;
-        } else {
+        }
+        else
+        {
             greater_num = num1.number;
             smaller_num = num2.number;
             break;
@@ -342,16 +422,22 @@ BigDecimalInt BigDecimalInt::rev_pos_neg(BigDecimalInt &num1, BigDecimalInt &num
     if (greater_num == num2.number && greater_num != smaller_num)
         result.sign_value = '-';
 
-    for (int i = smaller_num.size() - 1; i >= 0; --i) {
-        if (greater_num[i] >= smaller_num[i]) {
+    for (int i = smaller_num.size() - 1; i >= 0; --i)
+    {
+        if (greater_num[i] >= smaller_num[i])
+        {
             int diff = (greater_num[i] - '0') - (smaller_num[i] - '0');
-            result.number += (char) (diff + '0');
-        } else {
-            for (int j = i - 1; j >= 0; --j) {
-                if (greater_num[j] - '0') {
+            result.number += (char)(diff + '0');
+        }
+        else
+        {
+            for (int j = i - 1; j >= 0; --j)
+            {
+                if (greater_num[j] - '0')
+                {
                     greater_num[j]--;
                     int diff = (greater_num[i] - '0' + 10) - (smaller_num[i] - '0');
-                    result.number += (char) (diff + '0');
+                    result.number += (char)(diff + '0');
                     break;
                 }
             }
